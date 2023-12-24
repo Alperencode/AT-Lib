@@ -6,6 +6,10 @@ Python library/module for sending [AT Commands](https://en.wikipedia.org/wiki/Ha
 - [AT-Lib (In-Development)](#at-lib-in-development)
   - [Table of Contents](#table-of-contents)
   - [Usage](#usage)
+    - [Creating instance:](#creating-instance)
+    - [Sending at command:](#sending-at-command)
+    - [Receiving response](#receiving-response)
+    - [Send and Get](#send-and-get)
   - [Proper Output](#proper-output)
   - [License](#license)
 
@@ -16,7 +20,8 @@ Python library/module for sending [AT Commands](https://en.wikipedia.org/wiki/Ha
 
 <br><hr>
 
-- Creating instance:
+### Creating instance:
+
 ```python
 from source.atlib import ATLIB
 at = ATLIB(ATLIB.get_port())
@@ -24,25 +29,27 @@ at = ATLIB(ATLIB.get_port())
 
 <hr>
 
-- Sending at command:
+### Sending at command:
 
 **Input:**
 ```python
 at.send_at("ATI")
-``` 
+```
+
 **Output:**
 
 ![SendAT](images/SendAT.PNG)
 
 <hr>
 
-- Receiving response
+### Receiving response
 
 **Input:**
 ```python
 at.send_at("ATI")
 print(at.get_response())
 ``` 
+
 **Output:**
 
 ![SendAT](images/GetResponse.PNG)
@@ -51,7 +58,8 @@ print(at.get_response())
 ```python
 at.send_at("AT+CMD")
 print(at.get_response())
-``` 
+```
+ 
 **Output:**
 
 ![SendAT](images/Error1.PNG)
@@ -60,19 +68,21 @@ print(at.get_response())
 ```python
 at.send_at("")
 print(at.get_response())
-``` 
+```
+
 **Output:**
 
 ![SendAT](images/Error2.PNG)
 
 <hr>
 
-- Send and Get
+### Send and Get
 
 **Input:**
 ```python
 print(at.send_and_get("AT"))
-``` 
+```
+ 
 **Output:**
 
 ![SendAT](images/SendGet.PNG)
@@ -103,7 +113,7 @@ if __name__ == "__main__":
 
 **Output:**
 
-![ATLib1](images/ATLib1.PNG)
+![ATLib1](images/ATLIB.PNG)
 
 
 ## License
