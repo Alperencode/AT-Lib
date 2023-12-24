@@ -2,7 +2,7 @@ from source.atlib import ATLIB
 
 
 if __name__ == "__main__":
-    atlib = ATLIB(ATLIB.get_port())
+    at = ATLIB(ATLIB.get_port())
 
     commands = [
         "AT",
@@ -11,7 +11,8 @@ if __name__ == "__main__":
         "AT+CMD",
         "",
         "AT+CSQ",
+        "RANDOMMESSAGE"
     ]
 
     for command in commands:
-        print(atlib.send_and_get(command))
+        print(at.send_and_get(command))
