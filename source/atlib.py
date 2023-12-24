@@ -3,14 +3,14 @@ import serial
 
 class ATLIB:
     def __init__(self, port, timeout=15, baudrate=115200):
-        self.stopbits = serial.serial.STOPBITS_ONE
+        self.stopbits = serial.STOPBITS_ONE
         self.parity = serial.PARITY_NONE
 
         self.serial = serial.Serial(
             port=port,
             timeout=timeout,
             baudrate=baudrate,
-            stopbits=self.port,
+            stopbits=self.stopbits,
             parity=self.parity
         )
 
