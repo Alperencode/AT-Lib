@@ -1,14 +1,109 @@
-# AT-Lib
+# AT-Lib (In-Development)
 
-Python module/library for sending AT commands to modems and handling responses.
-
-> [!NOTE]
-> README will be updated later.
+Python library/module for sending [AT Commands](https://en.wikipedia.org/wiki/Hayes_AT_command_set) to modems and handling responses.
 
 ## Table of Contents
-- [AT-Lib](#at-lib)
+- [AT-Lib (In-Development)](#at-lib-in-development)
   - [Table of Contents](#table-of-contents)
+  - [Usage](#usage)
+  - [Proper Output](#proper-output)
   - [License](#license)
+
+## Usage
+
+> [!NOTE]
+> Because the project is **still in development**, end-user usage is not customized.
+
+<br><hr>
+
+- Creating instance:
+```python
+from source.atlib import ATLIB
+at = ATLIB(ATLIB.get_port())
+```
+
+<hr>
+
+- Sending at command:
+
+**Input:**
+```python
+at.send_at("ATI")
+``` 
+**Output:**
+
+![SendAT](images/SendAT.PNG)
+
+<hr>
+
+- Receiving response
+
+**Input:**
+```python
+at.send_at("ATI")
+print(at.get_response())
+``` 
+**Output:**
+
+![SendAT](images/GetResponse.PNG)
+
+**Input:**
+```python
+at.send_at("AT+CMD")
+print(at.get_response())
+``` 
+**Output:**
+
+![SendAT](images/Error1.PNG)
+
+**Input:**
+```python
+at.send_at("")
+print(at.get_response())
+``` 
+**Output:**
+
+![SendAT](images/Error2.PNG)
+
+<hr>
+
+- Send and Get
+
+**Input:**
+```python
+print(at.send_and_get("AT"))
+``` 
+**Output:**
+
+![SendAT](images/SendGet.PNG)
+
+## Proper Output
+
+**With given input:**
+
+```python
+from source.atlib import ATLIB
+
+
+if __name__ == "__main__":
+    at = ATLIB(ATLIB.get_port())
+
+    commands = [
+        "AT",
+        "ATI",
+        "AT*NOKIATEST",
+        "AT+CMD",
+        "",
+        "AT+CSQ",
+    ]
+
+    for command in commands:
+        print(at.send_and_get(command))
+```
+
+**Output:**
+
+![ATLib1](images/ATLib1.PNG)
 
 
 ## License
