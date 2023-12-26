@@ -66,8 +66,8 @@ class ATLIB:
             response = response.split("OK")[0].strip()
             if response == ATLIB.__last_command:
                 return "OK"
-            if ATLIB.__last_command in response:
-                # Currently not working
+            # Following if branch currently not working
+            if ATLIB.__last_command in response:    # pragma: no cover
                 response.replace(ATLIB.__last_command, "")
             return response
         elif "ERROR" in response:
@@ -75,6 +75,7 @@ class ATLIB:
             return "ERROR"
         else:
             logRed("[ERROR] Unexpected AT response")
+            return ''
 
     def send_and_get(self, command):
         log()
