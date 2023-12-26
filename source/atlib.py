@@ -1,5 +1,5 @@
 from .logger import logGreen, logRed, log
-import sys
+from serial import SerialException
 import time
 import serial
 
@@ -20,17 +20,15 @@ class ATLIB:
             parity=self.parity
         )
 
-    def __open_serial(self):
+    def __open_serial(self):    # pragma: no cover
         if not self.serial.is_open:
             try:
                 self.serial.open()
-            except Exception as e:
-                logRed("[ERROR] Couldn't open serial port.")
-                log(e)
-                sys.exit()
+            except SerialException:
+                raise SerialException("[ERROR] Couldn't read response")
 
     def send_at(self, at):
-        if len(at) <= 0:
+        if at is None or len(at) <= 0:
             logRed("[ERROR] Null command")
             return
         self.__open_serial()
@@ -43,27 +41,28 @@ class ATLIB:
             ATLIB.__last_command = at.strip()
             logGreen("[OK] AT command sent")
             log(at.strip())
-        except Exception as e:
-            logRed("[ERROR] Couldn't send AT command")
-            log(e)
+        except SerialException:
+            raise SerialException("[ERROR] Couldn't send AT command")
 
     def get_response(self):
         self.__open_serial()
-        response = ''
+        response = b''
 
         data = self.serial.in_waiting
         if data == 0:
             logRed("[ERROR] No data to read")
-            return response
+            return ''
 
         try:
             response = self.serial.read(data).decode('utf-8')
-        except Exception as e:
-            logRed("[ERROR] Couldn't get response")
-            log(e)
+        except UnicodeDecodeError:
+            msg = "[ERROR] Couldn't decode response"
+            raise UnicodeDecodeError('utf-8', response, 0, len(response), msg)
+        except SerialException:
+            raise SerialException("[ERROR] Couldn't read response")
 
         if "OK" in response:
-            logGreen("[OK] Response recieved")
+            logGreen("[OK] Response received")
             response = response.split("OK")[0].strip()
             if response == ATLIB.__last_command:
                 return "OK"
@@ -72,13 +71,13 @@ class ATLIB:
                 response.replace(ATLIB.__last_command, "")
             return response
         elif "ERROR" in response:
-            logRed("[OK] Response recieved as ERROR")
+            logRed("[OK] Response received as ERROR")
             return "ERROR"
         else:
             logRed("[ERROR] Unexpected AT response")
 
     def send_and_get(self, command):
-        print()
+        log()
         self.send_at(command)
         return self.get_response()
 
