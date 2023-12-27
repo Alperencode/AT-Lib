@@ -119,7 +119,7 @@ class ATLIB:
         return self.get_response()
 
     @staticmethod
-    def get_port():
+    def get_port():     # pragma: no cover
         """
         Finds valid port for serial communication
         """

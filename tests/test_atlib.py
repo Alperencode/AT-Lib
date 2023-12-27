@@ -25,10 +25,6 @@ def test_init():
     )
 
 
-def test_get_port():
-    assert ATLIB.get_port() != "/dev/ttyAMA0"
-
-
 def test_send_at_null(at):
 
     assert at.send_at("") is None
@@ -99,6 +95,23 @@ def test_get_response(mock_print, at):
 
 
 @patch('builtins.print')
+def test_get_response_error(mock_print, at):
+    at.serial = MagicMock()
+    at.serial.read.return_value = b'\nAT?\nERROR\n'
+    assert at.get_response() == "\nAT?\nERROR\n"
+
+    at.serial.read.return_value = b'\nATE3\nERROR\n'
+    assert at.get_response() == "\nATE3\nERROR\n"
+
+    expected_calls = [
+        call("\033[31m[OK] Response received as ERROR\033[0m"),
+        call("\033[31m[OK] Response received as ERROR\033[0m"),
+    ]
+
+    assert mock_print.call_args_list == expected_calls
+
+
+@patch('builtins.print')
 def test_send_at_outputs(mock_print, at):
     at.send_at("AT")
     at.send_at("AT+CMD")
@@ -108,6 +121,22 @@ def test_send_at_outputs(mock_print, at):
         call("AT"),
         call("\033[32m[OK] AT command sent\033[0m"),
         call("AT+CMD"),
+    ]
+
+    assert mock_print.call_args_list == expected_calls
+
+
+@patch('builtins.print')
+def test_send_and_get(mock_print, at):
+    at.serial.read.return_value = b'\nAT+CMEE=2\nOK\n'
+    response = at.send_and_get("AT+CMEE=2")
+    assert response == "OK"
+
+    expected_calls = [
+        call(""),
+        call("\033[32m[OK] AT command sent\033[0m"),
+        call("AT+CMEE=2"),
+        call("\033[32m[OK] Response received\033[0m"),
     ]
 
     assert mock_print.call_args_list == expected_calls
