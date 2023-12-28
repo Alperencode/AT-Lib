@@ -1,4 +1,5 @@
 from source.atlib import ATLIB
+import sys
 
 
 test_commands = [
@@ -29,5 +30,10 @@ request_commands = [
 if __name__ == "__main__":
     at = ATLIB(ATLIB.get_port())
 
-    for command in report_commands:
-        print(at.send_and_get(command))
+    sys.argv.pop(0)
+    if sys.argv:
+        for command in sys.argv:
+            print(at.send_and_get(str(command)))
+    else:
+        for command in report_commands:
+            print(at.send_and_get(command))

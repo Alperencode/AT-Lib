@@ -6,6 +6,8 @@ Python library/module for sending [AT Commands](https://en.wikipedia.org/wiki/Ha
 - [AT-Lib (In-Development)](#at-lib-in-development)
   - [Table of Contents](#table-of-contents)
   - [Usage](#usage)
+  - [End-User Usage](#end-user-usage)
+  - [Developer Usage](#developer-usage)
     - [Creating instance:](#creating-instance)
     - [Sending at command:](#sending-at-command)
     - [Receiving response](#receiving-response)
@@ -15,10 +17,35 @@ Python library/module for sending [AT Commands](https://en.wikipedia.org/wiki/Ha
 
 ## Usage
 
-> [!NOTE]
-> Because the project is **still in development**, end-user usage is not customized.
+## End-User Usage
+
+Enter at commands as an input and program will automatically send all the commands and receive responses
+
+**Input:**
+
+```bash
+$ python main.py AT ATI
+```
+
+**Output:**
+
+![SysInput](images/SysInput.PNG)
+
+**Input:**
+
+```bash
+$ python main.py AT '' AT?
+```
+
+**Output:**
+
+![SysInput](images/SysInput2.PNG)
+
 
 <br><hr>
+
+## Developer Usage
+
 
 ### Creating instance:
 
