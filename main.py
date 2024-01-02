@@ -24,7 +24,17 @@ report_commands = [
 ]
 
 request_commands = [
-    'AT+HTTPCLIENT=1,0,"http://httpbin.org/get","httpbin.org","/get",1',
+    # 'AT+QICSGP=1,3,"mms","vodafone","vodafone",1',
+    'AT+QHTTPCFG="contextid"',
+    'AT+QHTTPCFG="responseheader",1',
+    'AT+QICSGP=1,1,"internet","","",1',
+    'AT+QIACT=1',
+    'AT+QIACT?',
+    'AT+CGDCONT?',
+    # #'AT+QHTTPURL=25,80',
+    # 'https://httpbin.org/get',
+    # 'AT+QHTTPGET=80',
+    # 'AT+QHTTPREAD=80'
 ]
 
 if __name__ == "__main__":
@@ -35,5 +45,5 @@ if __name__ == "__main__":
         for command in sys.argv:
             print(at.send_and_get(str(command)))
     else:
-        for command in report_commands:
+        for command in request_commands:
             print(at.send_and_get(command))

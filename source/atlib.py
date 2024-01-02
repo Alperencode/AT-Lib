@@ -95,7 +95,7 @@ class ATLIB:
             response = response.split("OK")[0].strip()
 
             # Compare string with last command
-            if response == ATLIB.__last_command:
+            if response == ATLIB.__last_command or len(response) <= 0:
                 # If same, return "OK" (Example: "AT" -> "OK")
                 # Implemented to prevent printing commands repeatedly
                 return "OK"
@@ -106,9 +106,13 @@ class ATLIB:
             # Log error
             logRed("[OK] Response received as ERROR")
             return response
+        elif "CONNECT" in response:
+            # Log connect
+            logGreen("[OK] Response received as CONNECT")
+            return response
         else:
             logRed("[ERROR] Unexpected AT response")
-            return ''
+            return response
 
     def send_and_get(self, command):
         """
