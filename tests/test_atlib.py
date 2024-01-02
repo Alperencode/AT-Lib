@@ -83,12 +83,16 @@ def test_get_response(mock_print, at):
     assert at.get_response() == "AT+CSQ\n+CSQ: 18,99"
 
     at.serial.read.return_value = b'Random Response'
-    assert at.get_response() == ''
+    assert at.get_response() == 'Random Response'
+
+    at.serial.read.return_value = b'\nAT\n+HTTPURL=25,80\nCONNECT'
+    assert at.get_response() == 'CONNECT'
 
     expected_calls = [
         call("\033[32m[OK] Response received\033[0m"),
         call("\033[32m[OK] Response received\033[0m"),
         call("\033[31m[ERROR] Unexpected AT response\033[0m"),
+        call("\033[32m[OK] Response received\033[0m"),
     ]
 
     assert mock_print.call_args_list == expected_calls

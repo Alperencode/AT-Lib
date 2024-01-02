@@ -108,8 +108,8 @@ class ATLIB:
             return response
         elif "CONNECT" in response:
             # Log connect
-            logGreen("[OK] Response received as CONNECT")
-            return response
+            logGreen("[OK] Response received")
+            return "CONNECT"
         else:
             logRed("[ERROR] Unexpected AT response")
             return response

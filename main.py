@@ -31,10 +31,10 @@ request_commands = [
     'AT+QIACT=1',
     'AT+QIACT?',
     'AT+CGDCONT?',
-    # #'AT+QHTTPURL=25,80',
-    # 'https://httpbin.org/get',
-    # 'AT+QHTTPGET=80',
-    # 'AT+QHTTPREAD=80'
+    'AT+QHTTPURL=25,80',
+    'https://httpbin.org/get',
+    'AT+QHTTPGET=80',
+    'AT+QHTTPREAD=80'
 ]
 
 if __name__ == "__main__":
