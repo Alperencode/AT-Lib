@@ -25,15 +25,18 @@ report_commands = [
 
 request_commands = [
     # 'AT+QICSGP=1,3,"mms","vodafone","vodafone",1',
+    'AT+CMEE=1',
     'AT+QHTTPCFG="contextid"',
     'AT+QHTTPCFG="responseheader",1',
-    'AT+QICSGP=1,1,"internet","","",1',
-    'AT+QIACT=1',
-    'AT+QIACT?',
+    'AT+QICSGP=1,1,"UNINET","" ,"" ,1',
+    'AT+CGATT=1',
+    # 'AT+QIACT=1',
+    # 'AT+QIACT?',
     'AT+CGDCONT?',
     'AT+QHTTPURL=25,80',
-    'https://httpbin.org/get',
+    'https://webhook.site/85f89f43-b395-426b-be83-cb52c63cd214',
     'AT+QHTTPGET=80',
+    'AT+QSTK=1',
     'AT+QHTTPREAD=80'
 ]
 
