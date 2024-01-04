@@ -5,7 +5,7 @@ import serial
 
 
 class ATLIB:
-    __delay = 1
+    __delay = 0.3
     __last_command = ""
 
     def __init__(self, port, timeout=15, baudrate=115200):
@@ -48,6 +48,9 @@ class ATLIB:
         at = at + "\r\n"
 
         try:
+            # Clear the input buffer
+            self.serial.reset_input_buffer()
+
             # Encode and write message
             self.serial.write(at.encode())
 
@@ -80,6 +83,7 @@ class ATLIB:
         try:
             # Read buffer using data size
             response = self.serial.read(data).decode('utf-8')
+            self.serial.reset_output_buffer()
         except UnicodeDecodeError:
             # Handle decoding error
             msg = "[ERROR] Couldn't decode response"
@@ -94,7 +98,7 @@ class ATLIB:
             # Select the first string
             response = response.split("OK")[0].strip()
 
-            # Compare string with last command
+            # Compare string with last command and check length
             if response == ATLIB.__last_command or len(response) <= 0:
                 # If same, return "OK" (Example: "AT" -> "OK")
                 # Implemented to prevent printing commands repeatedly
@@ -111,7 +115,10 @@ class ATLIB:
             logGreen("[OK] Response received")
             return "CONNECT"
         else:
-            logRed("[ERROR] Unexpected AT response")
+            if response.strip() == ATLIB.__last_command:
+                logGreen("[OK] Response received")
+            else:
+                logRed("[ERROR] Unexpected AT response")
             return response
 
     def send_and_get(self, command):
