@@ -24,19 +24,45 @@ report_commands = [
 ]
 
 request_commands = [
-    # 'AT+QICSGP=1,3,"mms","vodafone","vodafone",1',
+    # Set error reporting mode to numeric
     'AT+CMEE=1',
-    'AT+QHTTPCFG="contextid"',
-    'AT+QHTTPCFG="responseheader",1',
+
+    # Set-up APN (PDP context for GPRS connectivity)
+    # 'AT+QICSGP=1,3,"mms","vodafone","vodafone",1',
     'AT+QICSGP=1,1,"UNINET","" ,"" ,1',
-    'AT+CGATT=1',
+
+    # Configure the HTTP context ID
+    'AT+QHTTPCFG="contextid"',
+
+    # Configure the response header for HTTP
+    'AT+QHTTPCFG="responseheader",1',
+
+    # Attaches to the GPRS service
+    # 'AT+CGATT=1',
+
+    # Activate the PDP context
     # 'AT+QIACT=1',
-    # 'AT+QIACT?',
+
+    # Query the status of the PDP context activation
+    'AT+QIACT?',
+
+    # Query the PDP (Packet Data Protocol) context list
     'AT+CGDCONT?',
+
+    # Configure the URL for HTTP operations
     'AT+QHTTPURL=25,80',
+
+    # Set the target URL for HTTP GET request
+    # This url will be removed to .env
     'https://webhook.site/85f89f43-b395-426b-be83-cb52c63cd214',
+
+    # HTTP GET request
     'AT+QHTTPGET=80',
+
+    # Activate the SIM Toolkit
     'AT+QSTK=1',
+
+    # Read the HTTP response from the server
     'AT+QHTTPREAD=80'
 ]
 

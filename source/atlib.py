@@ -5,7 +5,7 @@ import serial
 
 
 class ATLIB:
-    __delay = 0.3
+    __delay = 0.5
     __last_command = ""
 
     def __init__(self, port, timeout=15, baudrate=115200):
